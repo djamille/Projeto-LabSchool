@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "be/0lA5nMKH1JnwZRNpo7FnrvhnfWO38S2HOjus7lciQcwWLtGie8xkb3X/UukZQcB9vBMPCfLlCgMeTbjqm/g==",
+  "dgSpecHash": "V0pmEJX5q825sbQ8oiSSB1ggzuFud+hJ0GofNHj9lCNNnEMi96ZSPD8WmzOLoMYg7RbKOxsMqLtK1sRsS0barA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\djami\\FloripaMaisTec\\modulo01\\semana11\\LabSchool\\LabSchool.csproj",
+  "projectFilePath": "C:\\Users\\djami\\Desktop\\projeto\\LabSchool\\LabSchool.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\djami\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\djami\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

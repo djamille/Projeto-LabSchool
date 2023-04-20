@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\djami\\FloripaMaisTec\\modulo01\\semana11\\LabSchool\\LabSchool.csproj": {}
+    "C:\\Users\\djami\\Desktop\\projeto\\LabSchool\\LabSchool.csproj": {}
   },
   "projects": {
-    "C:\\Users\\djami\\FloripaMaisTec\\modulo01\\semana11\\LabSchool\\LabSchool.csproj": {
+    "C:\\Users\\djami\\Desktop\\projeto\\LabSchool\\LabSchool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\djami\\FloripaMaisTec\\modulo01\\semana11\\LabSchool\\LabSchool.csproj",
+        "projectUniqueName": "C:\\Users\\djami\\Desktop\\projeto\\LabSchool\\LabSchool.csproj",
         "projectName": "LabSchool",
-        "projectPath": "C:\\Users\\djami\\FloripaMaisTec\\modulo01\\semana11\\LabSchool\\LabSchool.csproj",
+        "projectPath": "C:\\Users\\djami\\Desktop\\projeto\\LabSchool\\LabSchool.csproj",
         "packagesPath": "C:\\Users\\djami\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\djami\\FloripaMaisTec\\modulo01\\semana11\\LabSchool\\obj\\",
+        "outputPath": "C:\\Users\\djami\\Desktop\\projeto\\LabSchool\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\djami\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -15,7 +15,7 @@ public class AlunoController : ControllerBase
     {
         _context = context;
     }
-        
+
     //Endpoint CRIAR
     [HttpPost]
     public IActionResult Create([FromBody] AlunoCriarEntDto alunoDto)
@@ -29,19 +29,25 @@ public class AlunoController : ControllerBase
         alunoEntrada.Situacao = alunoDto.Situacao;
         alunoEntrada.Nota = alunoDto.Nota;
 
-        _context.Alunos.Add(alunoEntrada);
-        _context.SaveChanges();
-
+        try
+        {
+            _context.Alunos.Add(alunoEntrada);
+            _context.SaveChanges();
+        }
+        catch (Exception excep) 
+        {
+            return Conflict("CPF já cadastrado");
+        }
 
         var alunoDtoSaida = new AlunoSaidaDto();
-        alunoDtoSaida.Cod = alunoEntrada.Cod;
+        alunoDtoSaida.Codigo = alunoEntrada.Cod;
         alunoDtoSaida.Nome = alunoEntrada.Nome;
         alunoDtoSaida.Telefone = alunoEntrada.Telefone;
         alunoDtoSaida.DataNascimento = alunoEntrada.DataNascimento;
         alunoDtoSaida.CPF = alunoEntrada.CPF;
         alunoDtoSaida.Situacao = alunoEntrada.Situacao;
         alunoDtoSaida.Nota = alunoEntrada.Nota;
-        alunoDtoSaida.QtdAtendimento = alunoEntrada.QtdAtendimento;
+        alunoDtoSaida.Atendimento = alunoEntrada.QtdAtendimento;
 
         return Ok(alunoDtoSaida);
     }
@@ -62,14 +68,14 @@ public class AlunoController : ControllerBase
         _context.SaveChanges();
 
         var alunoDtoSaida = new AlunoSaidaDto();
-        alunoDtoSaida.Cod = aluno.Cod;
+        alunoDtoSaida.Codigo = aluno.Cod;
         alunoDtoSaida.Nome = aluno.Nome;
         alunoDtoSaida.Telefone = aluno.Telefone;
         alunoDtoSaida.DataNascimento = aluno.DataNascimento;
         alunoDtoSaida.CPF = aluno.CPF;
         alunoDtoSaida.Situacao = aluno.Situacao;
         alunoDtoSaida.Nota = aluno.Nota;
-        alunoDtoSaida.QtdAtendimento = aluno.QtdAtendimento;
+        alunoDtoSaida.Atendimento = aluno.QtdAtendimento;
 
         return CreatedAtAction(nameof(AlunoController.Get), new { Cod = aluno.Cod }, alunoDtoSaida);
     }

@@ -40,12 +40,12 @@ public class AlunoAtualizarEntDto
 
 public class AlunoSaidaDto
 {
-    public int Cod { get; set; }
+    public int Codigo { get; set; }
     public string Nome { get; set; }
     public string Telefone { get; set; }
     public DateTime DataNascimento { get; set; }
     public string CPF { get; set; }
     public ESituacaoMatricula Situacao { get; set; }
     public float Nota { get; set; }
-    public int QtdAtendimento { get; set; }
+    public int Atendimento { get; set; }
 }
