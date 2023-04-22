@@ -1,4 +1,5 @@
-﻿using LabSchool.Models;
+﻿using LabSchool.Dtos;
+using LabSchool.Models;
 
 namespace LabSchool.Repositories.Interface;
 

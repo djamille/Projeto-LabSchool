@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LabSchool.Models.Configurations;
 
-public class ProfessorConfiguration : IEntityTypeConfiguration<Professor>
+public class ProfessorConfiguration : IEntityTypeConfiguration<Professor>                         //IEntityTypeConfiguration permite que a configuração seja feita por partes
 {
     public void Configure(EntityTypeBuilder<Professor> builder)
     {
-        builder.HasKey(x => x.Cod);
+        builder.HasKey(x => x.Cod);                         //Define chave primária
 
-        builder.Property(p => p.Nome)
-            .IsRequired()
-            .HasMaxLength(80);
+        builder.Property(p => p.Nome)                       //Define propriedade de uma entidade
+            .IsRequired()                                   //"Obrigatório"
+            .HasMaxLength(80);                              //Maximo de caraceteres aceitos
 
         builder.Property(p => p.Telefone)
             .IsRequired()
@@ -23,8 +23,8 @@ public class ProfessorConfiguration : IEntityTypeConfiguration<Professor>
         builder.Property(P => P.CPF)
             .HasMaxLength(11);
 
-        builder.HasIndex(P => P.CPF)
-            .IsUnique();
+        builder.HasIndex(P => P.CPF)                         //Se existir duplicidade retorna 
+            .IsUnique();                                     //Value deve ser único
 
         builder.Property(p => p.Formacao)
             .IsRequired();
@@ -35,6 +35,6 @@ public class ProfessorConfiguration : IEntityTypeConfiguration<Professor>
         builder.Property(p => p.Experiencia)
             .IsRequired();
         
-        builder.ToTable("Professor");
+        builder.ToTable("Professor");                         //Nome da tabela
     }
 }

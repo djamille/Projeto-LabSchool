@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LabSchool.Controllers;
 
-[ApiController]
-[Route("[controller]")]
+[ApiController]                      //Indicativo de que a classe é uma controller
+[Route("[controller]")]                         //Customização de url
 public class PedagogoController : ControllerBase
 {
     private readonly LabSchoolContext _context;
@@ -14,11 +14,15 @@ public class PedagogoController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
+    [HttpGet]                       //Este endpoint fara uma lista de pedagogos
     public IActionResult Get()
     {
-        var pedagogo = _context.Pedagogos.ToList();
-        return Ok(pedagogo);
+        var pedagogo = _context.Pedagogos.ToList();                           //Chamando método
+        if (pedagogo == null)
+        {
+            return NotFound();                     //Se for nulo retorna erro
+        }
+        return Ok(pedagogo);                     //Senão retorna o resultado solicitado
     }
 }
 

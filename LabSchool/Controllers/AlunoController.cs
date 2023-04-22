@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LabSchool.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class AlunoController : ControllerBase
+[ApiController]                      //Indicativo de que a classe é uma controller
+[Route("[controller]")]                         //Customização de url
+public class AlunoController : ControllerBase                               //Uma classe que deriva de ControllerBase serve para manipulação de páginas da Web
 {
-    private readonly LabSchoolContext _context;            //Injeção de dependencia - 
+    private readonly LabSchoolContext _context;
 
-    public AlunoController(LabSchoolContext context)
+    public AlunoController(LabSchoolContext context)            //Injeção de dependencia - 
     {
         _context = context;
     }
@@ -21,7 +21,7 @@ public class AlunoController : ControllerBase
     public IActionResult Create([FromBody] AlunoCriarEntDto alunoDto)
     {
         
-        var alunoEntrada = new Aluno();
+        var alunoEntrada = new Aluno();                         //Informações que api ira receber
         alunoEntrada.Nome = alunoDto.Nome;
         alunoEntrada.Telefone = alunoDto.Telefone;
         alunoEntrada.DataNascimento = alunoDto.DataNascimento;
@@ -32,14 +32,14 @@ public class AlunoController : ControllerBase
         try
         {
             _context.Alunos.Add(alunoEntrada);
-            _context.SaveChanges();
+            _context.SaveChanges();                         //Salva informações fornecidas
         }
         catch (Exception excep) 
         {
-            return Conflict("CPF já cadastrado");
+            return Conflict("CPF já cadastrado");                       //Retorna mensagem caso haja conflito
         }
 
-        var alunoDtoSaida = new AlunoSaidaDto();
+        var alunoDtoSaida = new AlunoSaidaDto();                         //Informações que api ira retornar
         alunoDtoSaida.Codigo = alunoEntrada.Cod;
         alunoDtoSaida.Nome = alunoEntrada.Nome;
         alunoDtoSaida.Telefone = alunoEntrada.Telefone;
@@ -49,25 +49,25 @@ public class AlunoController : ControllerBase
         alunoDtoSaida.Nota = alunoEntrada.Nota;
         alunoDtoSaida.Atendimento = alunoEntrada.QtdAtendimento;
 
-        return Ok(alunoDtoSaida);
+        return Ok(alunoDtoSaida);                     //Retorna o resultado solicitado
     }
 
 
     //Endpoint ATUALIZAR
     [HttpPut]
-    [Route("{Situacao}")]
-    public IActionResult Update(int Cod, [FromBody] AlunoAtualizarEntDto alunoDto)
+    [Route("{Situacao}")]                       //Este endpoint fara uma busca pelo cod, achando-o ira alterar somente a inform,ação liberada para acesso do usuario.
+    public IActionResult Update(int Cod, [FromBody] AlunoAtualizarEntDto alunoDto)                             //Criando EndPoint. 'IActionResult' é utilizado pois varios podem ser o tipo de retorno válido 
     {
-        var aluno = _context.Alunos.FirstOrDefault(x => x.Cod.Equals(Cod));
-        if (aluno == null)
+        var aluno = _context.Alunos.FirstOrDefault(x => x.Cod.Equals(Cod));                     //Nomeando variável e chamando método
+        if (aluno == null)                     //Se for nulo retorna erro
             return NotFound();
         
         aluno.Situacao = alunoDto.Situacao;
 
-        _context.Alunos.Update(aluno);
-        _context.SaveChanges();
+        _context.Alunos.Update(aluno);                           //Chamando metodo
+        _context.SaveChanges();                           //Salvando
 
-        var alunoDtoSaida = new AlunoSaidaDto();
+        var alunoDtoSaida = new AlunoSaidaDto();                         //Informações que api ira retornar
         alunoDtoSaida.Codigo = aluno.Cod;
         alunoDtoSaida.Nome = aluno.Nome;
         alunoDtoSaida.Telefone = aluno.Telefone;
@@ -77,45 +77,48 @@ public class AlunoController : ControllerBase
         alunoDtoSaida.Nota = aluno.Nota;
         alunoDtoSaida.Atendimento = aluno.QtdAtendimento;
 
-        return CreatedAtAction(nameof(AlunoController.Get), new { Cod = aluno.Cod }, alunoDtoSaida);
+        return CreatedAtAction(nameof(AlunoController.Get), new { Cod = aluno.Cod }, alunoDtoSaida);                    //Retorna o objeto
     }
 
 
     //Endpoint Consultar
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult Get()                       //Este endpoint fara uma lista de alunos
     {
-        var alunos = _context.Alunos.ToList();
-        return Ok(alunos);
+        var alunos = _context.Alunos.ToList();                  //Chamando método
+        if (alunos == null)                     //Se for nulo retorna erro
+            return NotFound();
+
+        return Ok(alunos);                     //Retorna o resultado solicitado
     }
     
 
     //Endpoint Consultar por Cod
     [HttpGet]
     [Route("{Cod}")]
-    public IActionResult GetByCod(int Cod)
+    public IActionResult GetByCod(int Cod)                       //Este endpoint fara uma busca pelo cod, retornando o ewncontrado
     {
-        var aluno = _context.Alunos.FirstOrDefault(x => x.Cod.Equals(Cod));
+        var aluno = _context.Alunos.FirstOrDefault(x => x.Cod.Equals(Cod));                           //Chamando método
         if (aluno == null)
         {
-            return NotFound();
+            return NotFound();                     //Se for nulo retorna erro
         }
-        return Ok(aluno);
+        return Ok(aluno);                     //Senão retorna o resultado solicitado
     }
 
         
     [HttpDelete]
-    public IActionResult Delete (int Cod)
+    public IActionResult Delete (int Cod)                       //Este endpoint fara uma busca pelo cod, achando-o ira deletar o usuario.
     {
         var aluno = _context.Alunos.FirstOrDefault(x => x.Cod.Equals(Cod));
         if (aluno == null)
         {
-            return NotFound();
+            return NotFound();                     //Se for nulo retorna erro
         }
 
-        _context.Alunos.Remove(aluno);
-        _context.SaveChanges();
+        _context.Alunos.Remove(aluno);                           //Chamando método
+        _context.SaveChanges();                           //Salvando
 
-        return NoContent();
+        return NoContent();                         //O servidor atendeu à solicitação com êxito e não há conteúdo adicional a ser enviado na resposta
     }    
 }

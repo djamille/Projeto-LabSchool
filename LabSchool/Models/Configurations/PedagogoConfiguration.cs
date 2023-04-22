@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LabSchool.Models.Configurations;
 
-public class PedagogoConfiguration : IEntityTypeConfiguration<Pedagogo>
+public class PedagogoConfiguration : IEntityTypeConfiguration<Pedagogo>                         //IEntityTypeConfiguration permite que a configuração seja feita por partes
 {
     public void Configure(EntityTypeBuilder<Pedagogo> builder)
     {
-        builder.HasKey(x => x.Cod);
+        builder.HasKey(x => x.Cod);                         //Define chave primária
 
 
-        builder.Property(p => p.Nome)
-            .IsRequired()
-            .HasMaxLength(80);
+        builder.Property(p => p.Nome)                       //Define propriedade de uma entidade
+            .IsRequired()                                   //"Obrigatório"
+            .HasMaxLength(80);                              //Maximo de caraceteres aceitos
 
         builder.Property(p => p.Telefone)
             .IsRequired()
@@ -26,13 +26,13 @@ public class PedagogoConfiguration : IEntityTypeConfiguration<Pedagogo>
             .IsRequired()
             .HasMaxLength(11);
 
-        builder.HasIndex(P => P.CPF)
-            .IsUnique();
+        builder.HasIndex(P => P.CPF)                         //Se existir duplicidade retorna 
+            .IsUnique();                                     //Value deve ser único
 
         builder.Property(p => p.QtdAtendimento)
             .IsRequired(); 
         
 
-        builder.ToTable("Pedagogo");
+        builder.ToTable("Pedagogo");                         //Nome da tabela
     }
 }

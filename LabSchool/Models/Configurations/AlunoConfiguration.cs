@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LabSchool.Models.Configurations;
 
-public class AlunoConfiguration : IEntityTypeConfiguration<Aluno>
+public class AlunoConfiguration : IEntityTypeConfiguration<Aluno>                         //IEntityTypeConfiguration permite que a configuração seja feita por partes
 {
-    public void Configure(EntityTypeBuilder<Aluno> builder)
+    public void Configure(EntityTypeBuilder<Aluno> builder)                         //Configura a entidade
     {
 
-        builder.HasKey(x => x.Cod);
+        builder.HasKey(x => x.Cod);                         //Define chave primária
 
-        builder.Property(p => p.Nome)
-            .IsRequired()
-            .HasMaxLength(80);
+        builder.Property(p => p.Nome)                       //Define propriedade de uma entidade
+            .IsRequired()                                   //"Obrigatório"
+            .HasMaxLength(80);                              //Maximo de caraceteres aceitos
 
         builder.Property(p => p.Telefone)
             .IsRequired()
@@ -32,13 +32,13 @@ public class AlunoConfiguration : IEntityTypeConfiguration<Aluno>
             .HasMaxLength(11)
             .IsRequired();
 
-        builder.HasIndex(P => P.CPF)
-            .IsUnique();
+        builder.HasIndex(P => P.CPF)                         //Se existir duplicidade retorna
+            .IsUnique();                                     //Value deve ser único
 
         builder.Property(p => p.QtdAtendimento)
             .IsRequired();
       
 
-        builder.ToTable("Aluno");
+        builder.ToTable("Aluno");                         //Nome da tabela
     }
 }
