@@ -1,5 +1,6 @@
 ﻿using LabSchool.Context;
 using LabSchool.Dtos;
+using LabSchool.Enums;
 using LabSchool.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ public class AlunoController : ControllerBase                               //Um
     [HttpPost]
     public IActionResult Create([FromBody] AlunoCriarEntDto alunoDto)
     {
-        
+
         var alunoEntrada = new Aluno();                         //Informações que api ira receber
         alunoEntrada.Nome = alunoDto.Nome;
         alunoEntrada.Telefone = alunoDto.Telefone;
@@ -34,9 +35,9 @@ public class AlunoController : ControllerBase                               //Um
             _context.Alunos.Add(alunoEntrada);
             _context.SaveChanges();                         //Salva informações fornecidas
         }
-        catch (Exception excep) 
+        catch (Exception excep)
         {
-            return Conflict("CPF já cadastrado");                       //Retorna mensagem caso haja conflito
+            return Conflict("CPF informado já foi cadastrado");                       //Retorna mensagem caso haja conflito
         }
 
         var alunoDtoSaida = new AlunoSaidaDto();                         //Informações que api ira retornar
@@ -51,17 +52,15 @@ public class AlunoController : ControllerBase                               //Um
 
         return Ok(alunoDtoSaida);                     //Retorna o resultado solicitado
     }
-
-
+    
     //Endpoint ATUALIZAR
-    [HttpPut]
-    [Route("{Situacao}")]                       //Este endpoint fara uma busca pelo cod, achando-o ira alterar somente a inform,ação liberada para acesso do usuario.
+    [HttpPut]                  //Este endpoint fara uma busca pelo cod, achando-o ira alterar somente a inform,ação liberada para acesso do usuario.
     public IActionResult Update(int Cod, [FromBody] AlunoAtualizarEntDto alunoDto)                             //Criando EndPoint. 'IActionResult' é utilizado pois varios podem ser o tipo de retorno válido 
     {
         var aluno = _context.Alunos.FirstOrDefault(x => x.Cod.Equals(Cod));                     //Nomeando variável e chamando método
         if (aluno == null)                     //Se for nulo retorna erro
             return NotFound();
-        
+
         aluno.Situacao = alunoDto.Situacao;
 
         _context.Alunos.Update(aluno);                           //Chamando metodo
@@ -83,15 +82,26 @@ public class AlunoController : ControllerBase                               //Um
 
     //Endpoint Consultar
     [HttpGet]
-    public IActionResult Get()                       //Este endpoint fara uma lista de alunos
+    public IActionResult Get([FromQuery] GetAlunosQueryParameters parameters)                       //Este endpoint fara uma lista de alunos, se o usuario passar Situacao (parameters.Situacao)vai ser filtrado por esse filtro, senao lista sem filtro
     {
-        var alunos = _context.Alunos.ToList();                  //Chamando método
-        if (alunos == null)                     //Se for nulo retorna erro
-            return NotFound();
+        
+        var alunos = new List<Aluno>();
 
+        if (parameters.Situacao != null)
+        {
+            alunos = _context.Alunos.Where(x => x.Situacao == parameters.Situacao).ToList();
+        } 
+        else
+        {
+            alunos = _context.Alunos.ToList();                  //Chamando método
+        }
+        if (alunos == null)                     //Se for nulo retorna erro
+        {
+            return NotFound();
+        }
         return Ok(alunos);                     //Retorna o resultado solicitado
     }
-    
+
 
     //Endpoint Consultar por Cod
     [HttpGet]
@@ -106,9 +116,9 @@ public class AlunoController : ControllerBase                               //Um
         return Ok(aluno);                     //Senão retorna o resultado solicitado
     }
 
-        
+
     [HttpDelete]
-    public IActionResult Delete (int Cod)                       //Este endpoint fara uma busca pelo cod, achando-o ira deletar o usuario.
+    public IActionResult Delete(int Cod)                       //Este endpoint fara uma busca pelo cod, achando-o ira deletar o usuario.
     {
         var aluno = _context.Alunos.FirstOrDefault(x => x.Cod.Equals(Cod));
         if (aluno == null)
@@ -121,4 +131,8 @@ public class AlunoController : ControllerBase                               //Um
 
         return NoContent();                         //O servidor atendeu à solicitação com êxito e não há conteúdo adicional a ser enviado na resposta
     }    
+}
+public class GetAlunosQueryParameters
+{
+    public ESituacaoMatricula? Situacao { get; set; }
 }

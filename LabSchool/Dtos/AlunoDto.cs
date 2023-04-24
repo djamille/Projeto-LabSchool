@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LabSchool.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace LabSchool.Dtos;                       //Aqui no DTO vai ocorrer uma validação de dados recebidos externamente (Data Annotations), conforme "regras" estabelecidas pelo dev (required, minlength, range...), antes de serem enviadas a outras camada
 

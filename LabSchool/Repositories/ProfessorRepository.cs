@@ -13,7 +13,7 @@ public class ProfessorRepository : IProfessorRepository
         _context = context;
     }
 
-    public List<Professor> List()
+    public List<Professor> List()                     //Metodo Listar Professor
     {
         return _context.Professores.ToList();
     }
